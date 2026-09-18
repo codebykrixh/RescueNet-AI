@@ -1,0 +1,79 @@
+# RescueNet AI — Level-1 infrastructure (docs/07 T-20, docs/12 M0)
+# Services: PostgreSQL (T-06) + Mosquitto (T-09) + backend (T-05).
+# NOTHING ELSE. No Redis, Kafka, Elasticsearch, PostGIS or Kubernetes (docs/07).
+#
+# The `backend` service is behind the "app" profile because no backend code
+# exists until M1. Default `docker compose up` starts infrastructure only.
+#   M0:      docker compose up -d              -> postgres + mosquitto
+#   M1+:     docker compose --profile app up   -> adds backend
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: rescuenet-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-rescuenet}
+      POSTGRES_USER: ${POSTGRES_USER:-rescuenet}
+      # No default. Supplied via deploy/.env, which is gitignored.
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in deploy/.env}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-rescuenet} -d ${POSTGRES_DB:-rescuenet}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  mosquitto:
+    image: eclipse-mosquitto:2
+    container_name: rescuenet-mosquitto
+    ports:
+      - "${MQTT_PORT:-1883}:1883"      # TCP  — backend publisher
+      - "${MQTT_WS_PORT:-9001}:9001"   # WS   — dashboard subscriber (docs/09 §4.1)
+    volumes:
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - ./mosquitto/passwd:/mosquitto/config/passwd:ro
+      - ./mosquitto/acl:/mosquitto/config/acl:ro
+      - mosquitto-data:/mosquitto/data
+    healthcheck:
+      # Subscribes to the real notification topic and exits as soon as the
+      # subscription is acknowledged (-E). This proves three things at once:
+      # broker up, credentials valid, and the ACL grants the subscribe.
+      # It must NOT probe $$SYS/# — the subscribe-only dashboard account is
+      # correctly denied there by the AP-10 ACL, so that probe always times out.
+      test: ["CMD-SHELL", "mosquitto_sub -h localhost -p 1883 -t 'rescuenet/v1/incident/+/notify' -E -u ${MQTT_HEALTH_USER:-rescuenet-dashboard} -P ${MQTT_HEALTH_PASSWORD:-} || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  backend:
+    profiles: ["app"]          # inactive until M1 delivers the application
+    build:
+      context: ../backend
+    container_name: rescuenet-backend
+    environment:
+      # These MUST carry the RESCUENET_ prefix: backend/src/rescuenet/config/settings.py
+      # declares env_prefix="RESCUENET_", so unprefixed names are silently ignored.
+      # Inside the compose network the database host is the service name `postgres`.
+      RESCUENET_APP_ENV: ${APP_ENV:-dev}
+      RESCUENET_DATABASE_URL: ${DATABASE_URL:?set DATABASE_URL in deploy/.env}
+      RESCUENET_MQTT_HOST: mosquitto
+      RESCUENET_MQTT_PORT: 1883
+      RESCUENET_MQTT_USERNAME: ${MQTT_PUBLISHER_USER:-rescuenet-publisher}
+      RESCUENET_MQTT_PASSWORD: ${MQTT_PUBLISHER_PASSWORD:?set MQTT_PUBLISHER_PASSWORD in deploy/.env}
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      mosquitto:
+        condition: service_started
+    restart: unless-stopped
+
+volumes:
+  postgres-data:
+  mosquitto-data:

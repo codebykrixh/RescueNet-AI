@@ -1,0 +1,14 @@
+{
+  "device_id": 17, "seq": 4023,
+  "type": "SURVIVOR_REPORTED",
+  "entity_type": "SURVIVOR", "entity_id": 0,
+  "payload": {
+    "cell_index": 214, "person_count": 2,
+    "survivor_status": "TRAPPED", "triage": "RED",
+    "rel_lat": 1420, "rel_lon": -880
+  },
+  "t_dev": "2026-08-22T10:02:41Z",
+  "responder_id": 71, "team_id": 3, "agency_id": 1, "incident_id": 9,
+  "schema_version": 1,
+  "server_seq": 1202, "t_srv": "2026-08-22T11:31:02Z", "received_via": "SMS"
+}

@@ -1,0 +1,10 @@
+{
+  "device_id": 0, "seq": 88,
+  "type": "ASSIGNMENT_ISSUED",
+  "entity_type": "ASSIGNMENT", "entity_id": 45,
+  "payload": { "assignment_id": 45, "team_id": 3, "cell_ids": [214, 215, 216] },
+  "t_dev": "2026-08-22T09:14:00Z",
+  "responder_id": 1, "team_id": 0, "agency_id": 1, "incident_id": 9,
+  "schema_version": 1,
+  "server_seq": 412, "t_srv": "2026-08-22T09:14:00Z", "received_via": "INTERNET"
+}

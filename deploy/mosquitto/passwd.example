@@ -1,0 +1,23 @@
+# RescueNet AI — Mosquitto password file TEMPLATE (docs/09 AP-23)
+#
+# THIS FILE CONTAINS NO CREDENTIALS AND MUST NOT BE USED AS-IS.
+# The real `passwd` file is gitignored and never committed.
+#
+# Generate it with real passwords of your choosing:
+#
+#   touch deploy/mosquitto/passwd
+#   mosquitto_passwd -b deploy/mosquitto/passwd rescuenet-publisher '<publisher-password>'
+#   mosquitto_passwd -b deploy/mosquitto/passwd rescuenet-dashboard '<dashboard-password>'
+#
+# Or, without a local mosquitto install, inside the container:
+#
+#   docker run --rm -v "$PWD/deploy/mosquitto:/m" eclipse-mosquitto:2 \
+#     mosquitto_passwd -b -c /m/passwd rescuenet-publisher '<publisher-password>'
+#   docker run --rm -v "$PWD/deploy/mosquitto:/m" eclipse-mosquitto:2 \
+#     mosquitto_passwd -b /m/passwd rescuenet-dashboard '<dashboard-password>'
+#
+# The same passwords go into deploy/.env (also gitignored).
+#
+# Expected accounts (hashes, one per line, produced by mosquitto_passwd):
+#   rescuenet-publisher:$7$...
+#   rescuenet-dashboard:$7$...

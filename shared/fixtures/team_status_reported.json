@@ -1,0 +1,10 @@
+{
+  "device_id": 17, "seq": 4022,
+  "type": "TEAM_STATUS_REPORTED",
+  "entity_type": "TEAM", "entity_id": 3,
+  "payload": { "team_status": "ACTIVE" },
+  "t_dev": "2026-08-22T10:00:20Z",
+  "responder_id": 71, "team_id": 3, "agency_id": 1, "incident_id": 9,
+  "schema_version": 1,
+  "server_seq": 1203, "t_srv": "2026-08-22T11:31:02Z", "received_via": "SMS"
+}

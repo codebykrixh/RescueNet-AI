@@ -1,0 +1,45 @@
+# RescueNet AI — backend (docs/07 T-04, T-05, T-08, T-16, T-17, T-18)
+# Modular monolith, single deployable. Dependencies are limited to those
+# approved in docs/07 §A; adding others requires amending docs/07 first.
+
+[project]
+name = "rescuenet-backend"
+version = "0.1.0"
+description = "RescueNet AI backend — event store, REST API, MQTT publisher"
+requires-python = ">=3.12"
+
+dependencies = [
+    "fastapi",           # T-05
+    "uvicorn[standard]", # T-05 ASGI server
+    "pydantic>=2",       # T-16 validation
+    "pydantic-settings", # T-16 configuration
+    "sqlalchemy>=2",     # T-08
+    "alembic",           # T-08 migrations
+    "psycopg[binary]",   # T-06 PostgreSQL driver
+    "aiomqtt",           # T-10 (PROVISIONAL — paho-mqtt is the documented fallback)
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",           # T-17
+    "pytest-asyncio",   # T-17
+    "httpx",            # T-17 async API client for tests
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "."]
+markers = [
+    "unit: pure logic, no I/O (docs/11 level U)",
+    "integration: requires Postgres and/or Mosquitto via Compose (docs/11 level I)",
+]
+# M3 adds the store and projections layers; both stay out of the domain (AD-03).
+# spikes/ is evidence, never source — it must never be collected or imported.
+norecursedirs = ["../spikes", ".git"]

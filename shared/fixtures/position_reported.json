@@ -1,0 +1,10 @@
+{
+  "device_id": 17, "seq": 4024,
+  "type": "POSITION_REPORTED",
+  "entity_type": "TEAM", "entity_id": 3,
+  "payload": { "rel_lat": 1402, "rel_lon": -871, "accuracy_m": 8.0, "cell_index": 214 },
+  "t_dev": "2026-08-22T10:03:00Z",
+  "responder_id": 71, "team_id": 3, "agency_id": 1, "incident_id": 9,
+  "schema_version": 1,
+  "server_seq": 1204, "t_srv": "2026-08-22T11:31:02Z", "received_via": "SMS"
+}

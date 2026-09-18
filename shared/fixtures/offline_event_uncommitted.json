@@ -1,0 +1,10 @@
+{
+  "device_id": 17, "seq": 4021,
+  "type": "CELL_STATUS_REPORTED",
+  "entity_type": "CELL", "entity_id": 214,
+  "payload": { "cell_index": 214, "status": "SEARCHED" },
+  "t_dev": "2026-08-22T10:00:14Z",
+  "responder_id": 71, "team_id": 3, "agency_id": 1, "incident_id": 9,
+  "schema_version": 1,
+  "server_seq": null, "t_srv": null, "received_via": null
+}

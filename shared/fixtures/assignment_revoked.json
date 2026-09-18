@@ -1,0 +1,10 @@
+{
+  "device_id": 0, "seq": 89,
+  "type": "ASSIGNMENT_REVOKED",
+  "entity_type": "ASSIGNMENT", "entity_id": 45,
+  "payload": { "assignment_id": 45, "reason": "structural shift" },
+  "t_dev": "2026-08-22T11:20:00Z",
+  "responder_id": 1, "team_id": 0, "agency_id": 1, "incident_id": 9,
+  "schema_version": 1,
+  "server_seq": 620, "t_srv": "2026-08-22T11:20:00Z", "received_via": "INTERNET"
+}

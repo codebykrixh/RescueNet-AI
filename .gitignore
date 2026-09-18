@@ -1,0 +1,237 @@
+# ============================================================================
+# RescueNet AI — .gitignore
+# Stack per docs/07-technology-selection.md: Python/FastAPI, PostgreSQL,
+# Mosquitto, Kotlin/Android, React/Vite/TypeScript, Docker Compose.
+# ============================================================================
+
+# ----------------------------------------------------------------------------
+# SECRETS AND CREDENTIALS — never commit. Commit *.example templates instead.
+# ----------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.env
+secrets/
+secret/
+credentials/
+*credentials*
+# Source code that *handles* credentials is not itself a credential. Verified
+# 2026-08-24: the blanket rule above was silently untracking four real source
+# files — `services/credentials.py`, `DeviceCredentialStore.kt`,
+# `CredentialStoreTest.kt` and the Alembic migration `0003_m5_credentials.py` —
+# so a fresh clone could neither build the app nor migrate the database.
+# Credential *data* (.json/.env/.ini/.txt/…) stays ignored; only source is
+# re-included.
+!*credentials*.py
+!*credentials*.kt
+!*credentials*.kts
+*secrets*
+!*secrets*.example
+*.secret
+*.secrets
+
+# API keys, tokens, device credentials (docs/09 Part 8)
+*apikey*
+*api_key*
+*api-key*
+*.token
+tokens.json
+device_tokens*
+hmac_secret*
+*.hmac
+
+# MQTT — static password file and ACL hold credentials (docs/09 §4.4, AP-23)
+deploy/mosquitto/passwd
+deploy/mosquitto/passwd.*
+deploy/mosquitto/pwfile*
+deploy/mosquitto/acl
+mosquitto_passwd*
+!deploy/mosquitto/passwd.example
+!deploy/mosquitto/acl.example
+!deploy/mosquitto/mosquitto.conf
+
+# SMS / carrier credentials (docs/09 Part 6)
+sms_credentials*
+*.sim
+gateway_secret*
+
+# Database credentials and connection strings
+*.pgpass
+.pgpass
+pgpass*
+database.ini
+db_credentials*
+
+# Certificates and private keys
+*.pem
+*.key
+*.crt
+*.cer
+*.der
+*.p12
+*.pfx
+*.csr
+!**/*.pub
+
+# Android signing material — a leaked keystore cannot be revoked
+*.jks
+*.keystore
+keystore*
+key.properties
+signing.properties
+release-signing*
+google-services.json
+
+# ----------------------------------------------------------------------------
+# PYTHON / FASTAPI BACKEND
+# ----------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+.venv/
+env/
+ENV/
+virtualenv/
+pip-wheel-metadata/
+*.egg-info/
+.eggs/
+.installed.cfg
+*.egg
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+.hypothesis/
+
+# ----------------------------------------------------------------------------
+# NODE / REACT / VITE DASHBOARD
+# ----------------------------------------------------------------------------
+node_modules/
+.npm/
+.yarn/
+.pnp.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.vite/
+.parcel-cache/
+.eslintcache
+coverage/
+.nyc_output/
+
+# ----------------------------------------------------------------------------
+# KOTLIN / ANDROID / GRADLE
+# ----------------------------------------------------------------------------
+.gradle/
+gradle-app.setting
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+local.properties
+*.iml
+captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+lint/
+lint-results*.xml
+release/
+proguard/
+
+# ----------------------------------------------------------------------------
+# BUILD AND DISTRIBUTION OUTPUT
+# ----------------------------------------------------------------------------
+build/
+dist/
+out/
+target/
+bin/
+obj/
+*.log
+
+# ----------------------------------------------------------------------------
+# LOCAL DATABASES
+# ----------------------------------------------------------------------------
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+*.db-wal
+*.db-shm
+pgdata/
+postgres-data/
+docker/volumes/
+
+# ----------------------------------------------------------------------------
+# IDE AND EDITOR METADATA
+# ----------------------------------------------------------------------------
+.idea/
+*.iws
+*.ipr
+.vscode/
+!.vscode/extensions.json
+.fleet/
+*.sublime-project
+*.sublime-workspace
+.project
+.classpath
+.settings/
+*.swp
+*.swo
+*~
+.\#*
+\#*\#
+
+# ----------------------------------------------------------------------------
+# OPERATING SYSTEM METADATA
+# ----------------------------------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+.AppleDouble
+.LSOverride
+Icon?
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# ----------------------------------------------------------------------------
+# TEMPORARY AND SCRATCH
+# ----------------------------------------------------------------------------
+*.tmp
+*.temp
+*.bak
+*.orig
+*.rej
+tmp/
+temp/
+scratch/
+.cache/
+
+# ----------------------------------------------------------------------------
+# DELIBERATELY TRACKED — do not add ignore rules for these
+# ----------------------------------------------------------------------------
+# docs/                       the project contract, docs 01–12
+# spikes/                     feasibility evidence (docs/04), never built or imported
+# shared/fixtures/            canonical event fixtures shared by all three test suites
+# shared/openapi/openapi.json generated but committed (FR-901/FR-902 evidence)
+# deploy/docker-compose.yml   environment definition
+# deploy/mosquitto/mosquitto.conf   broker config WITHOUT credentials

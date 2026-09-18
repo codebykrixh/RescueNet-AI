@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+      M6 declared no permissions. **M7 adds INTERNET and nothing else**, because
+      M7 owns `InternetTransport` (06 §7.2, 12 §3.4) and an HTTPS batch POST
+      cannot run without it.
+
+      This does not weaken TR-20 or AD-02: the *write path* still has no
+      transport dependency to call (06 §5.2 — "No network call exists on this
+      path"), and TR-20 is verified with radios disabled. Holding the permission
+      and making no call on the critical path are different things.
+
+      SMS permissions remain absent and belong to **M8** (SmsTransport, 12 §3.4).
+    -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!--
+      M8 adds SMS. `SmsTransport` sends the GSM-7 text batch (D-02a Final) and
+      receives the compact gateway ACK (D-06). `sendDataMessage` is never called:
+      binary/port-addressed SMS was rejected on measured evidence (SP-01b-A Q1).
+    -->
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="false"
+        android:label="RescueNet Field"
+        android:supportsRtl="true" />
+
+</manifest>

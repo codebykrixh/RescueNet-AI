@@ -1,0 +1,37 @@
+# RescueNet field app — version catalogue.
+# Versions are ratified in docs/12 §3.5 (M6 implementation decision).
+# Do not bump these without updating that section.
+
+[versions]
+agp = "9.3.1"
+kotlin = "2.3.20"
+ksp = "2.3.11"
+room = "2.8.4"
+serializationJson = "1.11.0"   # T-16 kotlinx.serialization (docs/07 row 13, docs/12 §4)
+coreKtx = "1.19.0"
+securityCrypto = "1.1.0"
+junit = "4.13.2"
+androidxTestJunit = "1.3.0"
+androidxTestRunner = "1.7.0"
+androidxTestCore = "1.7.0"
+coroutinesTest = "1.9.0"   # aligned with the coroutines-bom that androidx-test pins to strictly 1.9.0
+
+[libraries]
+androidx-core-ktx        = { module = "androidx.core:core-ktx",            version.ref = "coreKtx" }
+androidx-security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityCrypto" }
+room-runtime             = { module = "androidx.room:room-runtime",        version.ref = "room" }
+room-ktx                 = { module = "androidx.room:room-ktx",            version.ref = "room" }
+room-compiler            = { module = "androidx.room:room-compiler",       version.ref = "room" }
+room-testing             = { module = "androidx.room:room-testing",        version.ref = "room" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serializationJson" }
+junit                    = { module = "junit:junit",                       version.ref = "junit" }
+androidx-test-junit      = { module = "androidx.test.ext:junit",           version.ref = "androidxTestJunit" }
+androidx-test-runner     = { module = "androidx.test:runner",              version.ref = "androidxTestRunner" }
+androidx-test-core       = { module = "androidx.test:core",                version.ref = "androidxTestCore" }
+kotlinx-coroutines-test  = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutinesTest" }
+
+[plugins]
+android-application = { id = "com.android.application",      version.ref = "agp" }
+kotlin-android      = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+ksp                 = { id = "com.google.devtools.ksp",      version.ref = "ksp" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

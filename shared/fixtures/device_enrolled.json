@@ -1,0 +1,10 @@
+{
+  "device_id": 0, "seq": 4,
+  "type": "DEVICE_ENROLLED",
+  "entity_type": "DEVICE", "entity_id": 17,
+  "payload": { "device_id": 17, "team_id": 3, "responder_id": 71, "label": "Nokia-A" },
+  "t_dev": "2026-08-22T08:50:00Z",
+  "responder_id": 1, "team_id": 0, "agency_id": 1, "incident_id": 9,
+  "schema_version": 1,
+  "server_seq": 4, "t_srv": "2026-08-22T08:50:00Z", "received_via": "INTERNET"
+}

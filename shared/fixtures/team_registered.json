@@ -1,0 +1,10 @@
+{
+  "device_id": 0, "seq": 3,
+  "type": "TEAM_REGISTERED",
+  "entity_type": "TEAM", "entity_id": 3,
+  "payload": { "team_id": 3, "callsign": "Alpha", "agency_id": 1, "agency_type": "NDRF" },
+  "t_dev": "2026-08-22T08:45:00Z",
+  "responder_id": 1, "team_id": 0, "agency_id": 1, "incident_id": 9,
+  "schema_version": 1,
+  "server_seq": 3, "t_srv": "2026-08-22T08:45:00Z", "received_via": "INTERNET"
+}

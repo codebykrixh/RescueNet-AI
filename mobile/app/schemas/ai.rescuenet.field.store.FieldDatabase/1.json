@@ -1,0 +1,290 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "48afca16dd61207880f56143625a5a85",
+    "entities": [
+      {
+        "tableName": "event",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`device_id` INTEGER NOT NULL, `seq` INTEGER NOT NULL, `type` INTEGER NOT NULL, `entity_type` INTEGER NOT NULL, `entity_id` INTEGER NOT NULL, `payload` TEXT NOT NULL, `t_dev` INTEGER NOT NULL, `schema_version` INTEGER NOT NULL, `responder_id` INTEGER NOT NULL, `team_id` INTEGER NOT NULL, `agency_id` INTEGER NOT NULL, `incident_id` INTEGER NOT NULL, `server_seq` INTEGER, `t_srv` INTEGER, `received_via` INTEGER, PRIMARY KEY(`device_id`, `seq`))",
+        "fields": [
+          {
+            "fieldPath": "deviceId",
+            "columnName": "device_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "seq",
+            "columnName": "seq",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "entityType",
+            "columnName": "entity_type",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "entityId",
+            "columnName": "entity_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "payload",
+            "columnName": "payload",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "tDev",
+            "columnName": "t_dev",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "schemaVersion",
+            "columnName": "schema_version",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "responderId",
+            "columnName": "responder_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "teamId",
+            "columnName": "team_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "agencyId",
+            "columnName": "agency_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "incidentId",
+            "columnName": "incident_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "serverSeq",
+            "columnName": "server_seq",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "tSrv",
+            "columnName": "t_srv",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "receivedVia",
+            "columnName": "received_via",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "device_id",
+            "seq"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_event_server_seq",
+            "unique": false,
+            "columnNames": [
+              "server_seq"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_event_server_seq` ON `${TABLE_NAME}` (`server_seq`)"
+          },
+          {
+            "name": "index_event_incident_id_server_seq",
+            "unique": false,
+            "columnNames": [
+              "incident_id",
+              "server_seq"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_event_incident_id_server_seq` ON `${TABLE_NAME}` (`incident_id`, `server_seq`)"
+          },
+          {
+            "name": "index_event_entity_type_entity_id_server_seq",
+            "unique": false,
+            "columnNames": [
+              "entity_type",
+              "entity_id",
+              "server_seq"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_event_entity_type_entity_id_server_seq` ON `${TABLE_NAME}` (`entity_type`, `entity_id`, `server_seq`)"
+          },
+          {
+            "name": "index_event_team_id_server_seq",
+            "unique": false,
+            "columnNames": [
+              "team_id",
+              "server_seq"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_event_team_id_server_seq` ON `${TABLE_NAME}` (`team_id`, `server_seq`)"
+          }
+        ]
+      },
+      {
+        "tableName": "outbox",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`device_id` INTEGER NOT NULL, `seq` INTEGER NOT NULL, `state` TEXT NOT NULL, `priority` TEXT NOT NULL, `attempt_count` INTEGER NOT NULL, `next_attempt_at` INTEGER, `last_error` TEXT, `batch_ref` INTEGER, `first_queued_at` INTEGER NOT NULL, `rejected_code` TEXT, `rejected_message` TEXT, `rejected_at` INTEGER, `rejected_batch_ref` TEXT, PRIMARY KEY(`device_id`, `seq`), FOREIGN KEY(`device_id`, `seq`) REFERENCES `event`(`device_id`, `seq`) ON UPDATE NO ACTION ON DELETE RESTRICT )",
+        "fields": [
+          {
+            "fieldPath": "deviceId",
+            "columnName": "device_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "seq",
+            "columnName": "seq",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "state",
+            "columnName": "state",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "priority",
+            "columnName": "priority",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "attemptCount",
+            "columnName": "attempt_count",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nextAttemptAt",
+            "columnName": "next_attempt_at",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "lastError",
+            "columnName": "last_error",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "batchRef",
+            "columnName": "batch_ref",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "firstQueuedAt",
+            "columnName": "first_queued_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rejectedCode",
+            "columnName": "rejected_code",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "rejectedMessage",
+            "columnName": "rejected_message",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "rejectedAt",
+            "columnName": "rejected_at",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "rejectedBatchRef",
+            "columnName": "rejected_batch_ref",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "device_id",
+            "seq"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_outbox_state_priority",
+            "unique": false,
+            "columnNames": [
+              "state",
+              "priority"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_outbox_state_priority` ON `${TABLE_NAME}` (`state`, `priority`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "event",
+            "onDelete": "RESTRICT",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "device_id",
+              "seq"
+            ],
+            "referencedColumns": [
+              "device_id",
+              "seq"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "seq_counter",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`device_id` INTEGER NOT NULL, `next_seq` INTEGER NOT NULL, PRIMARY KEY(`device_id`))",
+        "fields": [
+          {
+            "fieldPath": "deviceId",
+            "columnName": "device_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nextSeq",
+            "columnName": "next_seq",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "device_id"
+          ]
+        }
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '48afca16dd61207880f56143625a5a85')"
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+# RescueNet AI — Mosquitto ACL (docs/09 §4.4, AP-10, AP-23)
+# Copy to `acl` (gitignored) before starting the broker.
+#
+# Two accounts. Nothing else may connect.
+
+# Backend publisher — WRITE ONLY. Cannot subscribe.
+user rescuenet-publisher
+topic write rescuenet/v1/incident/+/notify
+
+# Commander dashboard — READ ONLY. Cannot publish, ever.
+# This is the structural enforcement of AD-15: even a compromised dashboard
+# cannot turn MQTT into a write path.
+user rescuenet-dashboard
+topic read rescuenet/v1/incident/+/notify

@@ -1,0 +1,13 @@
+{
+  "device_id": 0, "seq": 2,
+  "type": "GRID_GENERATED",
+  "entity_type": "GRID", "entity_id": 9,
+  "payload": {
+    "origin_lat": 19.1638, "origin_lon": 73.6822,
+    "cell_size_m": 100.0, "rows": 25, "cols": 200, "bearing_deg": 0.0
+  },
+  "t_dev": "2026-08-22T08:42:00Z",
+  "responder_id": 1, "team_id": 0, "agency_id": 1, "incident_id": 9,
+  "schema_version": 1,
+  "server_seq": 2, "t_srv": "2026-08-22T08:42:00Z", "received_via": "INTERNET"
+}

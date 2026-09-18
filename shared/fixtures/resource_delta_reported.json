@@ -1,0 +1,10 @@
+{
+  "device_id": 22, "seq": 990,
+  "type": "RESOURCE_DELTA_REPORTED",
+  "entity_type": "RESOURCE", "entity_id": 7,
+  "payload": { "item_id": 7, "qty_delta": -2 },
+  "t_dev": "2026-08-22T10:12:00Z",
+  "responder_id": 84, "team_id": 5, "agency_id": 2, "incident_id": 9,
+  "schema_version": 1,
+  "server_seq": 915, "t_srv": "2026-08-22T10:12:04Z", "received_via": "INTERNET"
+}
